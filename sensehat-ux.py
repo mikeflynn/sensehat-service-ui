@@ -1,6 +1,9 @@
 #!/usr/bin/python
 import time
+import sys
+import ConfigParser
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
+from sys import argv
 
 sense = SenseHat()
 sense.set_rotation(0)
@@ -72,13 +75,33 @@ MODE_SELECT = 2
 
 mode = MODE_WAIT
 start_flag = 0
-
-options = [
-        {"name": "Access Point", "start": "...", "stop": "...", "status": False},
-        {"name": "Motion Sensor", "start": "...", "stop": "...", "status": False},
-        {"name": "Fruity WiFi", "start": "...", "stop": "...", "status": False}
-]
 options_idx = 0
+
+def getopts(argv):
+    opts = {}
+    while argv:
+        if argv[0][0] == '-': 
+            opts[argv[0]] = argv[1]
+        argv = argv[1:]
+    return opts
+
+def loadConfig(path):
+    Config = ConfigParser.ConfigParser()
+    Config.read(path)
+
+    services = []
+    
+    sections = Config.sections()
+    for section in sections:
+	service = {}
+	service['name'] = section
+
+        options = Config.options(section)
+        for option in options:
+            service[option] = Config.get(section, option)
+	services.append(service)
+
+    return services 
 
 def optionInc(options_idx):
     if options_idx == len(options) - 1:
@@ -107,24 +130,33 @@ sense.set_pixels(pixel_matrix_logo)
 time.sleep(1)
 sense.clear()
 
+args = getopts(argv)
+if '-c' in args:
+    options = loadConfig(args['-c'])
+else:
+   print("No config file in input.")
+   sys.exit(1)
+
+lastEvent = ""
 while True:
     for event in sense.stick.get_events():
-        if mode == MODE_WAIT:
+        thisEvent = "{}".format(event.direction)
+	if mode == MODE_WAIT:
             #print("The joystick was {} {}".format(event.action, event.direction))
             if event.direction == "down" and event.action == ACTION_HELD:
                 start_flag = start_flag + 1
                 if start_flag > 5:
-                    #sense.show_message(":)")
                     sense.set_pixels(pixel_matrix_happy)
                     start_flag = 0
                     mode = MODE_SELECT
                     time.sleep(1)
                     sense.clear()
             else:
-                sense.set_pixels(pixel_matrix_x)
                 start_flag = 0
-                time.sleep(1)
-                sense.clear()
+		if lastEvent != thisEvent:
+                    sense.set_pixels(pixel_matrix_x)
+                    time.sleep(1)
+                    sense.clear()
         else:
             if event.direction == "up" and event.action == ACTION_HELD:
                 start_flag = start_flag  + 1
@@ -142,3 +174,5 @@ while True:
                 showCurrentOption()
             elif event.direction == "middle" and event.action == ACTION_PRESSED:
                 toggleCurrentOption()
+
+	lastEvent = thisEvent
