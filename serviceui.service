@@ -1,0 +1,11 @@
+[Unit]
+Description=Sensehat Service UI
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/code/sensehat-service-ui/sensehat-ux.py -c /home/pi/services.ini
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
