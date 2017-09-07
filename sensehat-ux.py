@@ -169,7 +169,7 @@ def showCurrentOption():
         sense.set_pixels(pixel_matrix_err)
 
 def toggleCurrentOption():
-    status = processStatus(options_idx)\
+    status = processStatus(options_idx)
     sense.clear()
     if status > 0:
         res = processStop(options_idx)
