@@ -20,13 +20,17 @@ This is that.
 
 ## How
 
-### Installation
-
-_Coming soon!_
-
 ### Run
 
-_Coming soon!_
+Just create a config file, there's a demo ini file included, and run the script like this...
+
+```
+./sensehat-ux.py -c services-demo.ini
+```
+
+### Installation
+
+Once you have a config ini file, you can install the app as a system service by running `./install <path to your services.ini>`
 
 ## Who
 
