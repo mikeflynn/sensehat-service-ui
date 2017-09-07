@@ -4,7 +4,7 @@ SERVICE_NAME="sensehat-ui"
 
 if [ "$1" == "" ]; then
   echo "Missing services.ini path."
-  exit(1)
+  exit 1
 fi
 
 if [ "$1" == "--uninstall" ]; then
@@ -12,7 +12,7 @@ if [ "$1" == "--uninstall" ]; then
   sudo systemctl stop $SERVICE_NAME
   sudo systemctl disable $SERVICE_NAME
   sudo rm /lib/systemd/system/$SERVICE_NAME.service 
-  exit(0)
+  exit 0
 fi
 
 SERVICE_INI="$1"
@@ -41,7 +41,7 @@ SERVICE_FILE="${SERVICE_FILE//__CONFIG_PATH__/$SERVICE_INI}"
 sudo systemctl stop $SERVICE_NAME.service
 
 # Copy service file to /lib/systemd/system/
-sudo echo $SERVICE_FILE > /lib/systemd/system/$SERVICE_NAME.service
+sudo echo "$SERVICE_FILE" > /lib/systemd/system/$SERVICE_NAME.service
 
 sudo systemctl daemon-reload
 sudo systemctl enable $SERVICE_NAME.service
