@@ -30,7 +30,10 @@ Just create a config file, there's a demo ini file included, and run the script 
 
 ### Installation
 
-Once you have a config ini file, you can install the app as a system service by running `./install <path to your services.ini>`
+Once you have a config ini file, you can install the app as a system service by running 
+```
+./install <path to your services.ini>
+```
 
 ## Who
 
