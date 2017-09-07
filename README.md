@@ -32,7 +32,14 @@ Just create a config file, there's a demo ini file included, and run the script 
 
 Once you have a config ini file, you can install the app as a system service by running 
 ```
-./install <path to your services.ini>
+sudo ./install.sh <path to your services.ini>
+```
+
+### Uninstallation
+
+Just run the install script again, but with the `--uninstall` flag.
+```
+sudo ./install.sh --uninstall
 ```
 
 ## Who
