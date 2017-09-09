@@ -20,6 +20,24 @@ This is that.
 
 ## How
 
+### Configuration
+
+The services in the menu are all configured with a simple ini file and an example is included in the repo. Each section is an application or service, and each section should have three options: `start`, `stop`, and `status`.
+
+The `start` and `stop` bash commands don't need to return anything other than standard exit, but the `status` command should return a number that is greater than zero if the service is running (`wc -l` works great for this. Ex: `pgrep apache | wc -l`)
+
+```ini
+[THING 1]
+start: /some/command --start
+stop: /some/command --stop
+status: pgrep command | wc -l
+
+[THING 2]
+start: /some/command --start
+stop: /some/command --stop
+status: pgrep command | wc -l
+```
+
 ### Run
 
 Just create a config file, there's a demo ini file included, and run the script like this...
