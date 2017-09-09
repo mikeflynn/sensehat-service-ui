@@ -99,7 +99,7 @@ def getopts(argv):
         argv = argv[1:]
     return opts
 
-def loadConfig(path):
+def loadConfig():
     services = []
 
     sections = Config.sections()
@@ -153,10 +153,10 @@ def processStart(idx):
 def processStop(idx):
     try:
         subprocess.check_call(string.split(options[idx]["stop"], " "))
-	return True
+        return True
     except subprocess.CalledProcessError:
         print("Stop failed for {}".format(options[idx]["name"]))
-	return False
+    return False
 
 def showCurrentOption():
     status = processStatus(options_idx)
@@ -190,12 +190,14 @@ def toggleCurrentOption():
 args = getopts(argv)
 if '-c' in args:
     Config = ConfigParser.ConfigParser()
-    Config.read(path)
+    Config.read(args['-c'])
 
-    if Config.get('init', 'bootlogo'):
+    try:
         pixel_matrix_logo = Config.get('init', 'bootlogo')
+    except ConfigParser.NoSectionError:
+        pass
 
-    options = loadConfig(args['-c'])
+    options = loadConfig()
 else:
    print("No config file in input.")
    sys.exit(1)
