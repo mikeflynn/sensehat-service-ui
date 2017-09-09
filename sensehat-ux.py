@@ -11,77 +11,81 @@ sense = SenseHat()
 sense.set_rotation(0)
 sense.clear()
 
-red = R = (255, 0, 0)
-blue = L = (0, 0, 255)
-black = B = (0, 0, 0)
-white = W = (255, 255, 255)
-green = G = (0, 255, 0)
-orange = O = (255,165,0)
+colors = {}
+R = colors['R'] = (255,0,0) # Red
+O = colors['O'] = (255,165,0) # Orange
+Y = colors['Y'] = (255,255,0) # Yellow
+G = colors['G'] = (0,255,0) # Green
+L = colors['L'] = (0,0,255) # Blue
+I = colors['I'] = (111,0,255) # Indigo
+V = colors['V'] = (159,0,255) # Violet
+N = colors['N'] = (0,0,0) # No Color
+W = colors['W'] = (255,255,255) # White
 
-pixel_matrix_logo = [
-    L, L, L, L, L, L, L, L,
-    L, L, L, L, L, L, L, L,
-    L, L, L, L, L, L, L, L,
-    W, W, L, W, W, L, W, W,
-    W, W, L, W, W, L, W, W,
-    L, L, L, L, L, L, L, L,
-    L, L, L, L, L, L, L, L,
-    L, L, L, L, L, L, L, L
+pixel_matrix_logo_default = [
+    B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B,
+    W, W, B, W, W, B, W, W,
+    W, W, B, W, W, B, W, W,
+    B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B,
+    B, B, B, B, B, B, B, B
 ]
 
 pixel_matrix_x = [
-    R, R, B, B, B, B, R, R,
-    R, R, R, B, B, R, R, R,
-    B, R, R, R, R, R, R, B,
-    B, B, R, R, R, R, B, B,
-    B, B, R, R, R, R, B, B,
-    B, R, R, R, R, R, R, B,
-    R, R, R, B, B, R, R, R,
-    R, R, B, B, B, B, R, R
+    R, R, N, N, N, N, R, R,
+    R, R, R, N, N, R, R, R,
+    N, R, R, R, R, R, R, N,
+    N, N, R, R, R, R, N, N,
+    N, N, R, R, R, R, N, N,
+    N, R, R, R, R, R, R, N,
+    R, R, R, N, N, R, R, R,
+    R, R, N, N, N, N, R, R
 ]
 
 pixel_matrix_happy = [
-    B, B, B, B, B, B, B, G,
-    B, B, B, B, B, B, G, G,
-    B, B, B, B, B, G, G, G,
-    B, B, B, B, B, G, G, B,
-    B, G, B, B, G, G, G, B,
-    G, G, G, B, G, G, B, B,
-    B, G, G, G, G, B, B, B,
-    B, B, G, G, G, B, B, B
+    N, N, N, N, N, N, N, G,
+    N, N, N, N, N, N, G, G,
+    N, N, N, N, N, G, G, G,
+    N, N, N, N, N, G, G, N,
+    N, G, N, N, G, G, G, N,
+    G, G, G, N, G, G, N, N,
+    N, G, G, G, G, N, N, N,
+    N, N, G, G, G, N, N, N
 ]
 
 pixel_matrix_off = [
-    B, B, B, B, B, B, B, B,
-    B, B, B, B, R, B, B, B,
-    B, B, R, B, R, B, R, B,
-    B, R, B, B, R, B, B, R,
-    B, R, B, B, B, B, B, R,
-    B, B, R, B, B, B, R, B,
-    B, B, B, R, R, R, B, B,
-    B, B, B, B, B, B, B, B
+    N, N, N, N, N, N, N, N,
+    N, N, N, N, R, N, N, N,
+    N, N, R, N, R, N, R, N,
+    N, R, N, N, R, N, N, R,
+    N, R, N, N, N, N, N, R,
+    N, N, R, N, N, N, R, N,
+    N, N, N, R, R, R, N, N,
+    N, N, N, N, N, N, N, N
 ]
 
 pixel_matrix_on = [
-    B, B, B, B, B, B, B, B,
-    B, B, B, B, G, B, B, B,
-    B, B, G, B, G, B, G, B,
-    B, G, B, B, G, B, B, G,
-    B, G, B, B, B, B, B, G,
-    B, B, G, B, B, B, G, B,
-    B, B, B, G, G, G, B, B,
-    B, B, B, B, B, B, B, B
+    N, N, N, N, N, N, N, N,
+    N, N, N, N, G, N, N, N,
+    N, N, G, N, G, N, G, N,
+    N, G, N, N, G, N, N, G,
+    N, G, N, N, N, N, N, G,
+    N, N, G, N, N, N, G, N,
+    N, N, N, G, G, G, N, N,
+    N, N, N, N, N, N, N, N
 ]
 
 pixel_matrix_err = [
-    B, B, O, O, O, O, O, B,
-    B, B, O, O, O, O, O, B,
-    B, B, B, B, B, O, O, B,
-    B, B, B, B, O, O, B, B,
-    B, B, B, O, O, B, B, B,
-    B, B, B, O, O, B, B, B,
-    B, B, B, B, B, B, B, B,
-    B, B, B, O, O, B, B, B
+    N, N, O, O, O, O, O, N,
+    N, N, O, O, O, O, O, N,
+    N, N, N, N, N, O, O, N,
+    N, N, N, N, O, O, N, N,
+    N, N, N, O, O, N, N, N,
+    N, N, N, O, O, N, N, N,
+    N, N, N, N, N, N, N, N,
+    N, N, N, O, O, N, N, N
 ]
 
 MODE_WAIT = 1
@@ -116,6 +120,12 @@ def loadConfig():
 	services.append(service)
 
     return services
+
+def translatePixelArray(arr):
+    for x, p in enumerage(arr):
+        arr[x] = colors[p]
+
+    return arr
 
 def optionInc(options_idx):
     if options_idx == len(options) - 1:
@@ -192,8 +202,9 @@ if '-c' in args:
     Config = ConfigParser.ConfigParser()
     Config.read(args['-c'])
 
+    custom_boot_logo = pixel_matrix_logo_default
     try:
-        pixel_matrix_logo = Config.get('init', 'bootlogo')
+        custom_boot_logo = translatePixelArray(Config.get('init', 'bootlogo'))
     except ConfigParser.NoSectionError:
         pass
 
@@ -202,7 +213,12 @@ else:
    print("No config file in input.")
    sys.exit(1)
 
-sense.set_pixels(pixel_matrix_logo)
+try:
+    sense.set_pixels(custom_boot_logo)
+except ValueError:
+    print("Invalid custom boot logo.")
+    sense.set_pixels(pixel_matrix_logo_default)
+
 time.sleep(1)
 sense.clear()
 
