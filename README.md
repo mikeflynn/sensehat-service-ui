@@ -70,4 +70,4 @@ sudo ./install.sh --uninstall
 ## Who
 
 This terribly un-idiomatic Python (the Sense Hat API is in Python) has been hacked together by Mike Flynn.
-You can find him here: @thatmikeflynn or here: thatmikeflynn.com
+You can find him here: [@thatmikeflynn](https://twitter.com/thatmikeflynn) or here: [thatmikeflynn.com](http://thatmikeflynn.com) and tell him how Python is awesome and you love that whitespace matters and stuff.
