@@ -16,7 +16,7 @@ R = colors['R'] = (255,0,0) # Red
 O = colors['O'] = (255,165,0) # Orange
 Y = colors['Y'] = (255,255,0) # Yellow
 G = colors['G'] = (0,255,0) # Green
-L = colors['L'] = (0,0,255) # Blue
+B = colors['B'] = (0,0,255) # Blue
 I = colors['I'] = (111,0,255) # Indigo
 V = colors['V'] = (159,0,255) # Violet
 N = colors['N'] = (0,0,0) # No Color
@@ -122,7 +122,7 @@ def loadConfig():
     return services
 
 def translatePixelArray(arr):
-    for x, p in enumerage(arr):
+    for x, p in enumerate(arr):
         arr[x] = colors[p]
 
     return arr
