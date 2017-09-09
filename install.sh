@@ -15,6 +15,11 @@ if [ "$1" == "--uninstall" ]; then
   exit 0
 fi
 
+if [ "$1" == "--reload" ]; then
+  # Restart service
+  sudo systemctl restart $SERVICE_NAME
+fi
+
 SERVICE_INI="$1"
 APP_PATH=$(pwd)
 
