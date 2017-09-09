@@ -35,6 +35,13 @@ Once you have a config ini file, you can install the app as a system service by 
 sudo ./install.sh <path to your services.ini>
 ```
 
+### Reload
+
+If you make changes to the config ini file, you'll need to restart the service to pick up those changes.
+```
+sudo ./install.sh --reload
+```
+
 ### Uninstallation
 
 Just run the install script again, but with the `--uninstall` flag.
