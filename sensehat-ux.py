@@ -205,7 +205,7 @@ if '-c' in args:
     custom_boot_logo = pixel_matrix_logo_default
     try:
         custom_boot_logo = translatePixelArray(Config.get('init', 'bootlogo').split(','))
-    except ConfigParser.NoSectionError:
+    except (ConfigParser.NoSectionError,ConfigParser.NoOptionError) as e:
         pass
 
     options = loadConfig()
