@@ -123,7 +123,7 @@ def loadConfig():
 
 def translatePixelArray(arr):
     for x, p in enumerate(arr):
-        arr[x] = colors[p]
+        arr[x] = colors[p.strip('\t\n\r')]
 
     return arr
 
@@ -204,7 +204,7 @@ if '-c' in args:
 
     custom_boot_logo = pixel_matrix_logo_default
     try:
-        custom_boot_logo = translatePixelArray(Config.get('init', 'bootlogo'))
+        custom_boot_logo = translatePixelArray(Config.get('init', 'bootlogo').split(','))
     except ConfigParser.NoSectionError:
         pass
 
