@@ -12,21 +12,21 @@ sense.set_rotation(0)
 sense.clear()
 
 red = R = (255, 0, 0)
-blue = Bl = (0, 0, 255)
+blue = L = (0, 0, 255)
 black = B = (0, 0, 0)
 white = W = (255, 255, 255)
 green = G = (0, 255, 0)
 orange = O = (255,165,0)
 
 pixel_matrix_logo = [
-    R, R, R, R, R, R, R, R,
-    R, R, R, W, W, R, R, R,
-    R, R, R, W, W, R, R, R,
-    R, W, W, W, W, W, W, R,
-    R, W, W, W, W, W, W, R,
-    R, R, R, W, W, R, R, R,
-    R, R, R, W, W, R, R, R,
-    R, R, R, R, R, R, R, R
+    L, L, L, L, L, L, L, L,
+    L, L, L, L, L, L, L, L,
+    L, L, L, L, L, L, L, L,
+    W, W, L, W, W, L, W, W,
+    W, W, L, W, W, L, W, W,
+    L, L, L, L, L, L, L, L,
+    L, L, L, L, L, L, L, L,
+    L, L, L, L, L, L, L, L
 ]
 
 pixel_matrix_x = [
@@ -79,7 +79,7 @@ pixel_matrix_err = [
     B, B, B, B, B, O, O, B,
     B, B, B, B, O, O, B, B,
     B, B, B, O, O, B, B, B,
-    B, B, B, O, O, B, B, B,	
+    B, B, B, O, O, B, B, B,
     B, B, B, B, B, B, B, B,
     B, B, B, O, O, B, B, B
 ]
@@ -94,28 +94,28 @@ options_idx = 0
 def getopts(argv):
     opts = {}
     while argv:
-        if argv[0][0] == '-': 
+        if argv[0][0] == '-':
             opts[argv[0]] = argv[1]
         argv = argv[1:]
     return opts
 
 def loadConfig(path):
-    Config = ConfigParser.ConfigParser()
-    Config.read(path)
-
     services = []
-    
+
     sections = Config.sections()
     for section in sections:
-	service = {}
-	service['name'] = section
+        if section == 'init':
+            continue
+
+        service = {}
+        service['name'] = section
 
         options = Config.options(section)
         for option in options:
             service[option] = Config.get(section, option)
 	services.append(service)
 
-    return services 
+    return services
 
 def optionInc(options_idx):
     if options_idx == len(options) - 1:
@@ -139,7 +139,7 @@ def processStatus(idx):
     except subprocess.CalledProcessError:
         print("Status command failed for {}".format(options[idx]["name"]))
         res = -1
-    
+
     return res
 
 def processStart(idx):
@@ -187,16 +187,22 @@ def toggleCurrentOption():
 
 ## Main
 
-sense.set_pixels(pixel_matrix_logo)
-time.sleep(1)
-sense.clear()
-
 args = getopts(argv)
 if '-c' in args:
+    Config = ConfigParser.ConfigParser()
+    Config.read(path)
+
+    if Config.get('init', 'bootlogo'):
+        pixel_matrix_logo = Config.get('init', 'bootlogo')
+
     options = loadConfig(args['-c'])
 else:
    print("No config file in input.")
    sys.exit(1)
+
+sense.set_pixels(pixel_matrix_logo)
+time.sleep(1)
+sense.clear()
 
 lastEvent = ""
 while True:
