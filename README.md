@@ -6,17 +6,17 @@ Powered by a simple ini file and set as a service to run on boot, Sense Hat Serv
 
 ### Demo
 
-![Start the UI](https://media.giphy.com/media/wLUB4IkG6zVgQ/giphy.gif)
+![Start the UI](img/sensehatui-start.gif)
 
-![Use the UI](https://media.giphy.com/media/MInNz1vlXmJnq/giphy.gif)
+![Use the UI](img/sensehatui-use.gif)
 
-![Quit the UI](https://media.giphy.com/media/CXpDunwLvJSco/giphy.gif)
+![Quit the UI](img/sensehatui-exit.gif)
 
 ## Why
 
-I had a spare Raspberry Pi. 
+I had a spare Raspberry Pi.
 
-I thought it would be cool to set up a little computer I could carry with me that would have a variety of services on it. The services would range from development to network security, but I realized that if the services required my to VNC or SSH in first and turn them on manually every time, it would be very helpful (and leaving them all on all the time isn't secure). 
+I thought it would be cool to set up a little computer I could carry with me that would have a variety of services on it. The services would range from development to network security, but I realized that if the services required my to VNC or SSH in first and turn them on manually every time, it would be very helpful (and leaving them all on all the time isn't secure).
 
 I also had a spare Sense Hat from a previously aboandoned project.
 
@@ -50,28 +50,31 @@ status: pgrep command | wc -l
 
 Just create a config file, there's a demo ini file included, and run the script like this...
 
-```
+```bash
 ./sensehat-ux.py -c services-demo.ini
 ```
 
 ### Installation
 
-Once you have a config ini file, you can install the app as a system service by running 
-```
+Once you have a config ini file, you can install the app as a system service by running
+
+```bash
 sudo ./install.sh <path to your services.ini>
 ```
 
 ### Reload
 
 If you make changes to the config ini file, you'll need to restart the service to pick up those changes.
-```
+
+```bash
 sudo ./install.sh --reload
 ```
 
 ### Uninstallation
 
 Just run the install script again, but with the `--uninstall` flag.
-```
+
+```bash
 sudo ./install.sh --uninstall
 ```
 
