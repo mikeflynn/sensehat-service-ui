@@ -4,6 +4,14 @@
 
 Powered by a simple ini file and set as a service to run on boot, Sense Hat Service UI allows you to turn on and off the services you've configured without having to login to the Pi via SSh or VNC. The menu is controlled completely via the joystick and LEDs on the Raspberry Pi Sense Hat. Just add 5V!
 
+### Demo
+
+![Start the UI](https://media.giphy.com/media/wLUB4IkG6zVgQ/giphy.gif)
+
+![Use the UI](https://media.giphy.com/media/MInNz1vlXmJnq/giphy.gif)
+
+![Quit the UI](https://media.giphy.com/media/CXpDunwLvJSco/giphy.gif)
+
 ## Why
 
 I had a spare Raspberry Pi. 
