@@ -263,5 +263,5 @@ while True:
                 elif event.direction == "middle" and event.action == ACTION_PRESSED:
                     toggleCurrentOption()
 
-    lastEvent = thisEvent
-    time.sleep(0.05)
+        lastEvent = thisEvent
+        time.sleep(0.05)
