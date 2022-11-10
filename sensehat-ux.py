@@ -2,7 +2,7 @@
 import time
 import sys
 import string
-import ConfigParser
+import configparser
 import subprocess
 from sense_hat import SenseHat, ACTION_PRESSED, ACTION_HELD, ACTION_RELEASED
 from sys import argv
@@ -201,13 +201,13 @@ def toggleCurrentOption():
 
 args = getopts(argv)
 if '-c' in args:
-    Config = ConfigParser.ConfigParser()
+    Config = configparser.ConfigParser()
     Config.read(args['-c'])
 
     custom_boot_logo = pixel_matrix_logo_default
     try:
         custom_boot_logo = translatePixelArray(Config.get('init', 'bootlogo').split(','))
-    except (ConfigParser.NoSectionError,ConfigParser.NoOptionError) as e:
+    except (configparser.NoSectionError,configparser.NoOptionError) as e:
         pass
 
     options = loadConfig()
@@ -228,40 +228,40 @@ lastEvent = ""
 while True:
     for event in sense.stick.get_events():
         thisEvent = "{}".format(event.direction)
-    if mode == MODE_WAIT:
-        #print("The joystick was {} {}".format(event.action, event.direction))
-        if event.direction == "down" and event.action == ACTION_HELD:
-            start_flag = start_flag + 1
-            if start_flag > 5:
-                sense.set_pixels(pixel_matrix_happy)
-                start_flag = 0
-                mode = MODE_SELECT
-                time.sleep(1)
-                sense.clear()
-        else:
-            start_flag = 0
-
-        if lastEvent != thisEvent:
-                    sense.set_pixels(pixel_matrix_x)
-                    time.sleep(1)
-                    sense.clear()
-        else:
-            if event.direction == "up" and event.action == ACTION_HELD:
-                start_flag = start_flag  + 1
+        if mode == MODE_WAIT:
+            #print("The joystick was {} {}".format(event.action, event.direction))
+            if event.direction == "down" and event.action == ACTION_HELD:
+                start_flag = start_flag + 1
                 if start_flag > 5:
                     sense.set_pixels(pixel_matrix_happy)
                     start_flag = 0
-                    mode = MODE_WAIT
+                    mode = MODE_SELECT
                     time.sleep(1)
                     sense.clear()
-            elif event.direction == "right" and event.action == ACTION_PRESSED:
-                options_idx = optionInc(options_idx)
-                showCurrentOption()
-            elif event.direction == "left" and event.action == ACTION_PRESSED:
-                options_idx = optionDec(options_idx)
-                showCurrentOption()
-            elif event.direction == "middle" and event.action == ACTION_PRESSED:
-                toggleCurrentOption()
+            else:
+                start_flag = 0
+
+            if lastEvent != thisEvent:
+                        sense.set_pixels(pixel_matrix_x)
+                        time.sleep(1)
+                        sense.clear()
+            else:
+                if event.direction == "up" and event.action == ACTION_HELD:
+                    start_flag = start_flag  + 1
+                    if start_flag > 5:
+                        sense.set_pixels(pixel_matrix_happy)
+                        start_flag = 0
+                        mode = MODE_WAIT
+                        time.sleep(1)
+                        sense.clear()
+                elif event.direction == "right" and event.action == ACTION_PRESSED:
+                    options_idx = optionInc(options_idx)
+                    showCurrentOption()
+                elif event.direction == "left" and event.action == ACTION_PRESSED:
+                    options_idx = optionDec(options_idx)
+                    showCurrentOption()
+                elif event.direction == "middle" and event.action == ACTION_PRESSED:
+                    toggleCurrentOption()
 
     lastEvent = thisEvent
     time.sleep(0.05)
