@@ -117,7 +117,7 @@ def loadConfig():
         options = Config.options(section)
         for option in options:
             service[option] = Config.get(section, option)
-	services.append(service)
+    services.append(service)
 
     return services
 
@@ -183,15 +183,17 @@ def toggleCurrentOption():
     sense.clear()
     if status > 0:
         res = processStop(options_idx)
-	if res == True:
+
+        if res == True:
             sense.set_pixels(pixel_matrix_off)
         else:
             sense.set_pixels(pixel_matrix_err)
+
     elif status == 0:
         if processStart(options_idx) == True:
             sense.set_pixels(pixel_matrix_on)
         else:
-	    sense.set_pixels(pixel_matrix_err)
+           sense.set_pixels(pixel_matrix_err)
     else:
         sense.set_pixels(pixel_matrix_err)
 
@@ -226,19 +228,20 @@ lastEvent = ""
 while True:
     for event in sense.stick.get_events():
         thisEvent = "{}".format(event.direction)
-	if mode == MODE_WAIT:
-            #print("The joystick was {} {}".format(event.action, event.direction))
-            if event.direction == "down" and event.action == ACTION_HELD:
-                start_flag = start_flag + 1
-                if start_flag > 5:
-                    sense.set_pixels(pixel_matrix_happy)
-                    start_flag = 0
-                    mode = MODE_SELECT
-                    time.sleep(1)
-                    sense.clear()
-            else:
+    if mode == MODE_WAIT:
+        #print("The joystick was {} {}".format(event.action, event.direction))
+        if event.direction == "down" and event.action == ACTION_HELD:
+            start_flag = start_flag + 1
+            if start_flag > 5:
+                sense.set_pixels(pixel_matrix_happy)
                 start_flag = 0
-		if lastEvent != thisEvent:
+                mode = MODE_SELECT
+                time.sleep(1)
+                sense.clear()
+        else:
+            start_flag = 0
+
+        if lastEvent != thisEvent:
                     sense.set_pixels(pixel_matrix_x)
                     time.sleep(1)
                     sense.clear()
@@ -260,5 +263,5 @@ while True:
             elif event.direction == "middle" and event.action == ACTION_PRESSED:
                 toggleCurrentOption()
 
-	lastEvent = thisEvent
+    lastEvent = thisEvent
     time.sleep(0.05)
